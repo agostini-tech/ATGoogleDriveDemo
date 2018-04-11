@@ -81,7 +81,7 @@ class ATGoogleDrive {
         })
     }
     
-    public func download(fileID: String, onCompleted: @escaping (Data?, Error?) -> ()) {
+    public func download(_ fileID: String, onCompleted: @escaping (Data?, Error?) -> ()) {
         let query = GTLRDriveQuery_FilesGet.queryForMedia(withFileId: fileID)
         service.executeQuery(query) { (ticket, file, error) in
             onCompleted((file as? GTLRDataObject)?.data, error)
@@ -108,6 +108,13 @@ class ATGoogleDrive {
         
         service.executeQuery(query) { (ticket, folder, error) in
             onCompleted((folder as? GTLRDrive_File)?.identifier, error)
+        }
+    }
+    
+    public func delete(_ fileID: String, onCompleted: ((Error?) -> ())?) {
+        let query = GTLRDriveQuery_FilesDelete.query(withFileId: fileID)
+        service.executeQuery(query) { (ticket, nilFile, error) in
+            onCompleted?(error)
         }
     }
 }
