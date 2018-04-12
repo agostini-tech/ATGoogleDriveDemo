@@ -63,10 +63,6 @@ extension ViewController: GIDSignInDelegate {
             service.authorizer = nil
         } else {
             service.authorizer = user.authentication.fetcherAuthorizer()
-
-            drive?.search("agostini_tech_demo") { (objectID, error) in
-                print("ObjectID: \(objectID); Error: \(error?.localizedDescription)")
-            }
         }
     }
 }
